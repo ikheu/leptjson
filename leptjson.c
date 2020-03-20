@@ -28,39 +28,6 @@ static int lept_parse_literal(lept_context *c, lept_value *v, const char * liter
     return LEPT_PARSE_OK;
 }
 
-static int lept_parse_null(lept_context *c, lept_value *v) {
-    EXPECT(c, 'n');
-    const char *p = c->json;
-    if (p[0] != 'u' || p[1] != 'l' || p[2] != 'l') { /* 注意这里的短路计算，不会导致越界 */
-        return LEPT_PARSE_INVALID_VALUE; 
-    }
-    c->json += 3;
-    v->type = LEPT_NULL;
-    return LEPT_PARSE_OK;
-}
-
-static int lept_parse_true(lept_context *c, lept_value *v) {
-    EXPECT(c, 't');
-    const char *p = c->json;
-    if (p[0] != 'r' || p[1] != 'u' || p[2] != 'e') {
-        return LEPT_PARSE_INVALID_VALUE;
-    }
-    c->json += 3;
-    v->type = LEPT_TRUE;
-    return LEPT_PARSE_OK;
-}
-
-static int lept_parse_false(lept_context *c, lept_value *v) {
-    EXPECT(c, 'f');
-    const char *p = c->json;
-    if (p[0] != 'a' || p[1] != 'l' || p[2] != 's' || p[3] != 'e') {
-        return LEPT_PARSE_INVALID_VALUE;
-    }
-    c->json += 4;
-    v->type = LEPT_FALSE;
-    return LEPT_PARSE_OK;
-}
-
 static int lept_parse_number(lept_context* c, lept_value* v) {
     char* end;
     /* \TODO validate number */
